@@ -1,0 +1,20 @@
+data/
+# Secrets
+.env
+.env.*
+
+# Virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated FAISS files
+storage/*.bin
+storage/*.pkl
+
+# Local files
+.vscode/
+.pytest_cache/
