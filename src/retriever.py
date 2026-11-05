@@ -14,6 +14,9 @@ def retrieve(query, model, index, chunks, top_k=5):
     results = []
 
     for i in indices[0]:
+        # FAISS returns -1 when it has fewer vectors than top_k
+        if i < 0:
+            continue
         results.append(chunks[i])
 
     return results
