@@ -45,6 +45,9 @@ The system operates in two stages:
 | FastAPI | REST API development |
 | Pydantic | Request validation |
 | Docker | Application containerization |
+| Streamlit | Chat interface |
+| GitHub Actions | CI: tests, syntax check and Docker build |
+| Pytest | Automated tests |
 | Git & GitHub | Version control |
 
 ## Key Features
@@ -58,6 +61,8 @@ The system operates in two stages:
 - Persistent FAISS vector index
 - REST API built with FastAPI
 - Docker-based application execution
+- Streamlit chat interface
+- Automated tests for chunking, retrieval, sources and the API
 
 ## Dataset and Knowledge Base
 
@@ -98,6 +103,11 @@ Accepts a question and returns an answer with supporting document references.
 
 *The response shown above is illustrative; actual answers and retrieved pages depend on the indexed documents.*
 
+### Error responses
+
+- `422`: the question is missing, empty or blank.
+- `503`: the LLM call failed.
+
 ## Running the Application
 
 ### Prerequisites
@@ -124,6 +134,14 @@ Never commit your API key to GitHub.
 pip install -r requirements.txt
 ```
 
+### Build the Index
+
+Put your PDF documents in `data/`, then run this from the project root:
+
+```bash
+python src/ingest.py
+```
+
 ### Start the FastAPI Application
 
 Once the FAISS index and chunk metadata have been generated, run:
@@ -137,6 +155,15 @@ Open the interactive API documentation:
 http://127.0.0.1:8000/docs
 
 Use the `/ask` endpoint to submit a question.
+
+### Open the Chat Interface
+
+With the FastAPI application running on port 8000, open a second terminal:
+
+```bash
+pip install -r requirements-ui.txt
+streamlit run chat_ui.py
+```
 
 ### Run with Docker
 
@@ -158,6 +185,17 @@ http://localhost:8000/docs
 
 **Note:** The Docker image currently expects the saved FAISS index and chunk metadata to exist in `storage/` before building.
 
+## Running the Tests
+
+The tests need no PDFs, model download or Gemini API key, because the heavy modules are stubbed:
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
+GitHub Actions runs them on pushes and pull requests to `main`.
+
 ## Project Outcomes
 
 This project demonstrates practical experience with:
@@ -175,9 +213,7 @@ This project demonstrates practical experience with:
 - Automated document ingestion and index rebuilding
 - Retrieval quality evaluation
 - Improved citation accuracy
-- Automated testing and GitHub Actions CI/CD
 - Cloud deployment
-- Web-based user interface
 
 ## Author
 
