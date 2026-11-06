@@ -176,14 +176,14 @@ docker build -t rag-doc-assistant .
 Run the container:
 
 ```bash
-docker run -d --name rag-container -p 8000:8000 --env-file .env rag-doc-assistant
+docker run -d --name rag-container -p 8000:8000 --env-file .env -v "${PWD}/storage:/app/storage:ro" rag-doc-assistant
 ```
 
 Open:
 
 http://localhost:8000/docs
 
-**Note:** The Docker image currently expects the saved FAISS index and chunk metadata to exist in `storage/` before building.
+**Note:** The image does not contain the FAISS index or chunk metadata, because `storage/` is not in Git and CI builds the image from Git. Build the index first, then mount `storage/` when starting the container as shown above. The API cannot start without it.
 
 ## Running the Tests
 

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "question": "How many layers are used in the Transformer encoder, and what are its two main sub-layers?",
+    "ground_truth": "The Transformer encoder consists of 6 identical layers. Each layer contains a multi-head self-attention mechanism and a position-wise fully connected feed-forward network.",
+    "source": "attention_is_all_you_need.pdf",
+    "page": 3
+  },
+
+  {
+  "id": 2,
+  "question": "How many identical layers does the Transformer decoder contain?",
+  "ground_truth": "The Transformer decoder consists of 6 identical layers.",
+  "source": "attention_is_all_you_need.pdf",
+  "page": 3
+}
+]
