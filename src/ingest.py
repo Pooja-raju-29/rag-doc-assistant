@@ -11,7 +11,7 @@ from vector_store import create_vector_store
 def main():
     project_root = Path(__file__).resolve().parent.parent
     data_dir = project_root / "data"
-    storage_dir = project_root / "storage"
+    storage_dir = project_root / "storage" / "token_224"
 
     storage_dir.mkdir(parents=True, exist_ok=True)
 

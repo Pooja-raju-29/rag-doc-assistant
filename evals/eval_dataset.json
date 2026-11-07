@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1,
+    "question": "How many layers are used in the Transformer encoder, and what are its two main sub-layers?",
+    "ground_truth": "The Transformer encoder consists of 6 identical layers. Each layer contains a multi-head self-attention mechanism and a position-wise fully connected feed-forward network.",
+    "source": "attention_is_all_you_need.pdf",
+    "page": 3,
+    "evidence": "The encoder is composed of a stack of N = 6 identical layers. Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position-wise fully connected feed-forward network."
+  },
+  {
+    "id": 2,
+    "question": "In the multi-head attention section of the Transformer paper, how many parallel attention heads are employed?",
+    "ground_truth": "The section employs 8 parallel attention layers, or heads.",
+    "source": "attention_is_all_you_need.pdf",
+    "page": 5,
+    "evidence": "In this work we employ h = 8 parallel attention layers, or heads."
+  },
+  {
+    "id": 3,
+    "question": "How does the learning rate change during Transformer training, and what value was used for warmup_steps?",
+    "ground_truth": "The learning rate increases linearly for the first warmup_steps training steps and then decreases proportionally to the inverse square root of the step number. warmup_steps was set to 4000.",
+    "source": "attention_is_all_you_need.pdf",
+    "page": 7,
+    "evidence": "This corresponds to increasing the learning rate linearly for the first warmup_steps training steps, and decreasing it thereafter proportionally to the inverse square root of the step number. We used warmup_steps = 4000."
+  },
+  {
+    "id": 4,
+    "question": "What label smoothing value was used to train the Transformer, and what effect did it have?",
+    "ground_truth": "A label smoothing value of 0.1 was used. It hurts perplexity but improves accuracy and BLEU score.",
+    "source": "attention_is_all_you_need.pdf",
+    "page": 8,
+    "evidence": "During training, we employed label smoothing of value ϵls = 0.1 [36]. This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score."
+  },
+  {
+    "id": 5,
+    "question": "Which actions can Corrective RAG trigger based on its confidence degrees?",
+    "ground_truth": "Corrective RAG can trigger three actions: Correct, Incorrect and Ambiguous.",
+    "source": "Corrective Retrieval Augmented Generation.pdf",
+    "page": 3,
+    "evidence": "three confidence degrees and then triggered the corresponding actions: {Correct, Incorrect, Ambiguous}"
+  },
+  {
+    "id": 6,
+    "question": "For which Corrective RAG actions are large-scale web searches used, and why?",
+    "ground_truth": "Web searches are used for the Incorrect and Ambiguous actions, because retrieval from static and limited corpora can only return sub-optimal documents in terms of scope and diversity.",
+    "source": "Corrective Retrieval Augmented Generation.pdf",
+    "page": 2,
+    "evidence": "knowledge retrieval actions of {Correct, Incorrect, Ambiguous} can be triggered. For the latter two actions, large-scale web searches (Piktus et al., 2021; Komeili et al., 2022) are integrated as a strategic extension, since retrieval from static and limited corpora can only return sub-optimal documents in terms of scope and diversity."
+  },
+  {
+    "id": 7,
+    "question": "What happens to retrieved documents when Corrective RAG triggers the Correct action?",
+    "ground_truth": "The retrieved documents are refined into more precise knowledge strips, using knowledge decomposition, filtering and recomposition.",
+    "source": "Corrective Retrieval Augmented Generation.pdf",
+    "page": 3,
+    "evidence": "If the action Correct is triggered, the retrieved documents will be refined into more precise knowledge strips. This refinement operation involves knowledge decomposition, filter, and recomposition"
+  },
+  {
+    "id": 8,
+    "question": "On which four datasets was Corrective RAG evaluated?",
+    "ground_truth": "Corrective RAG was evaluated on PopQA, Biography, PubHealth and Arc-Challenge.",
+    "source": "Corrective Retrieval Augmented Generation.pdf",
+    "page": 6,
+    "evidence": "CRAG was evaluated on four datasets, including PopQA (Mallen et al., 2023) (short-form generation), Biography (Min et al., 2023) (long-form generation), PubHealth (Zhang et al., 2023a) (true-or-false question), and Arc-Challenge (Bhakthavatsalam et al., 2021) (multiple-choice question)."
+  },
+  {
+    "id": 9,
+    "question": "How many parameters does GPT-3 have?",
+    "ground_truth": "GPT-3 has 175 billion parameters.",
+    "source": "Language Models are Few-Shot Learners.pdf",
+    "page": 1,
+    "evidence": "we train GPT-3, an autoregressive language model with 175 billion parameters"
+  },
+  {
+    "id": 10,
+    "question": "In the GPT-3 paper, what does the few-shot setting mean, and are weight updates allowed in it?",
+    "ground_truth": "The model is given a few demonstrations of the task at inference time as conditioning, and no weight updates are allowed.",
+    "source": "Language Models are Few-Shot Learners.pdf",
+    "page": 6,
+    "evidence": "Few-Shot (FS) is the term we will use in this work to refer to the setting where the model is given a few demonstrations of the task at inference time as conditioning [RWC+19], but no weight updates are allowed."
+  },
+  {
+    "id": 11,
+    "question": "In the few-shot setting, what accuracy did GPT-3 achieve at 3-digit subtraction?",
+    "ground_truth": "GPT-3 achieved 94.2% accuracy at 3-digit subtraction in the few-shot setting.",
+    "source": "Language Models are Few-Shot Learners.pdf",
+    "page": 22,
+    "evidence": "First we evaluate GPT-3 in the few-shot setting, for which results are shown in Figure 3.10. On addition and subtraction, GPT-3 displays strong proficiency when the number of digits is small, achieving 100% accuracy on 2 digit addition, 98.9% at 2 digit subtraction, 80.2% at 3 digit addition, and 94.2% at 3-digit subtraction."
+  },
+  {
+    "id": 12,
+    "question": "According to the GPT-3 paper, why can malicious uses of language models be difficult to anticipate?",
+    "ground_truth": "They often involve repurposing language models in a very different environment or for a different purpose than researchers intended.",
+    "source": "Language Models are Few-Shot Learners.pdf",
+    "page": 35,
+    "evidence": "Malicious uses of language models can be somewhat difficult to anticipate because they often involve repurposing language models in a very different environment or for a different purpose than researchers intended."
+  },
+  {
+    "id": 13,
+    "question": "Which three RAG paradigms does the RAG survey for large language models examine?",
+    "ground_truth": "The survey examines Naive RAG, Advanced RAG and Modular RAG.",
+    "source": "Retrieval-Augmented Generation for Lar.pdf",
+    "page": 1,
+    "evidence": "the progression of RAG paradigms, encompassing the Naive RAG, the Advanced RAG, and the Modular RAG."
+  },
+  {
+    "id": 14,
+    "question": "What process does Naive RAG follow, and what is that framework also called?",
+    "ground_truth": "Naive RAG follows indexing, retrieval and generation, and it is also characterized as a Retrieve-Read framework.",
+    "source": "Retrieval-Augmented Generation for Lar.pdf",
+    "page": 3,
+    "evidence": "The Naive RAG follows a traditional process that includes indexing, retrieval, and generation, which is also characterized as a “Retrieve-Read” framework [7]."
+  },
+  {
+    "id": 15,
+    "question": "Why does the RAG survey suggest using an LLM to rewrite queries?",
+    "ground_truth": "Original queries are not always optimal for LLM retrieval, especially in real-world scenarios.",
+    "source": "Retrieval-Augmented Generation for Lar.pdf",
+    "page": 9,
+    "evidence": "The original queries are not always optimal for LLM retrieval, especially in real-world scenarios. Therefore, we can prompt LLM to rewrite the queries."
+  },
+  {
+    "id": 16,
+    "question": "What does Context Relevance evaluate in the RAG survey?",
+    "ground_truth": "Context Relevance evaluates the precision and specificity of the retrieved context, ensuring relevance and minimizing processing costs associated with extraneous content.",
+    "source": "Retrieval-Augmented Generation for Lar.pdf",
+    "page": 12,
+    "evidence": "Context Relevance evaluates the precision and specificity of the retrieved context, ensuring relevance and minimizing processing costs associated with extraneous content."
+  },
+  {
+    "id": 17,
+    "question": "What is the difference between RAG-Sequence and RAG-Token?",
+    "ground_truth": "RAG-Sequence uses the same document to predict each target token, while RAG-Token can predict each target token based on a different document.",
+    "source": "Retrieval-Augmented Generation for.pdf",
+    "page": 3,
+    "evidence": "In one approach, RAG-Sequence, the model uses the same document to predict each target token. The second approach, RAG-Token, can predict each target token based on a different document."
+  },
+  {
+    "id": 18,
+    "question": "Which retriever and which seq2seq model are combined in the original RAG model?",
+    "ground_truth": "The original RAG model combines the Dense Passage Retriever (DPR) with the BART seq2seq model.",
+    "source": "Retrieval-Augmented Generation for.pdf",
+    "page": 2,
+    "evidence": "The retriever (Dense Passage Retriever [26], henceforth DPR) provides latent documents conditioned on the input, and the seq2seq model (BART [32]) then conditions on these latent documents together with the input to generate the output."
+  },
+  {
+    "id": 19,
+    "question": "What does the Thorough Decoding procedure do for RAG-Sequence?",
+    "ground_truth": "It runs beam search for each document to get a set of hypotheses. To estimate a hypothesis's probability, it runs an additional forward pass for each document where the hypothesis did not appear in the beam, multiplies the generator probability with the document probability, and sums the probabilities across beams.",
+    "source": "Retrieval-Augmented Generation for.pdf",
+    "page": 4,
+    "evidence": "Instead, we run beam search for each document z, scoring each hypothesis using pθ(yi|x, z, y1:i−1). This yields a set of hypotheses Y , some of which may not have appeared in the beams of all documents. To estimate the probability of an hypothesis y we run an additional forward pass for each document z for which y does not appear in the beam, multiply generator probability with pη(z|x) and then sum the probabilities across beams for the marginals. We refer to this decoding procedure as “Thorough Decoding.”"
+  },
+  {
+    "id": 20,
+    "question": "Which RAG variant performed better on Jeopardy question generation?",
+    "ground_truth": "RAG-Token performed better than RAG-Sequence on Jeopardy question generation.",
+    "source": "Retrieval-Augmented Generation for.pdf",
+    "page": 6,
+    "evidence": "Table 2 shows that RAG-Token performs better than RAG-Sequence on Jeopardy question generation, with both models outperforming BART on Q-BLEU-1."
+  },
+  {
+    "id": 21,
+    "question": "How did the 1.3B parameter InstructGPT model compare with the 175B GPT-3 in human evaluations?",
+    "ground_truth": "Outputs from the 1.3B parameter InstructGPT model were preferred to outputs from the 175B GPT-3, despite having 100x fewer parameters.",
+    "source": "Training language models to follow instructions.pdf",
+    "page": 1,
+    "evidence": "In human evaluations on our prompt distribution, outputs from the 1.3B parameter InstructGPT model are preferred to outputs from the 175B GPT-3, despite having 100x fewer parameters."
+  },
+  {
+    "id": 22,
+    "question": "In the InstructGPT results section, how did the PPO models compare with GPT-3 in human evaluations on the TruthfulQA dataset?",
+    "ground_truth": "The PPO models showed small but significant improvements in generating truthful and informative outputs compared to GPT-3. The exception was the 1.3B PPO-ptx model, which performed slightly worse than a GPT-3 model of the same size.",
+    "source": "Training language models to follow instructions.pdf",
+    "page": 13,
+    "evidence": "As measured by human evaluatoins on the TruthfulQA dataset, our PPO models show small but significant improvements in generating truthful and informative outputs compared to GPT-3 (see Figure 6). This behavior is the default: our models do not have to be specifically instructed to tell the truth to exhibit improved truthfulness. Interestingly, the exception is our 1.3B PPO-ptx model, which performs slightly worse than a GPT-3 model of the same size."
+  },
+  {
+    "id": 23,
+    "question": "How many training prompts were in the SFT, RM and PPO datasets used for InstructGPT?",
+    "ground_truth": "The SFT dataset had about 13k training prompts, the RM dataset had 33k, and the PPO dataset had 31k.",
+    "source": "Training language models to follow instructions.pdf",
+    "page": 7,
+    "evidence": "The SFT dataset contains about 13k training prompts (from the API and labeler-written), the RM dataset has 33k training prompts (from the API and labeler-written), and the PPO dataset has 31k training prompts (only from the API)."
+  },
+  {
+    "id": 24,
+    "question": "Which algorithm was used to fine-tune the SFT model in InstructGPT's reinforcement learning step?",
+    "ground_truth": "The SFT model was fine-tuned using PPO.",
+    "source": "Training language models to follow instructions.pdf",
+    "page": 9,
+    "evidence": "we fine-tuned the SFT model on our environment using PPO (Schulman et al., 2017)."
+  }
+]

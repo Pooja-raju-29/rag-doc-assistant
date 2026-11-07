@@ -12,8 +12,8 @@ __pycache__/
 *.pyc
 
 # Generated FAISS files
-storage/*.bin
-storage/*.pkl
+storage/**/*.bin
+storage/**/*.pkl
 
 # Local files
 .vscode/

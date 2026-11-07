@@ -1,4 +1,6 @@
+.venv/
 venv/
+evals/
 .env
 .git/
 .gitignore

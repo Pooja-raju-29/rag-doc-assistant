@@ -16,6 +16,11 @@
 import faiss
 import numpy as np
 import pickle
+
+# The index and chunks the application uses
+ACTIVE_INDEX_PATH = "storage/token_224/faiss_index.bin"
+ACTIVE_CHUNKS_PATH = "storage/token_224/chunks.pkl"
+
 def create_vector_store(embeddings):
     embeddings = np.array(embeddings).astype("float32")
 

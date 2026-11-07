@@ -1,0 +1,3 @@
+# Dependencies for the Streamlit chat interface (chat_ui.py)
+streamlit==1.66.0
+requests==2.34.2
