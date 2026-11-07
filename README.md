@@ -12,14 +12,14 @@ This project implements an end-to-end RAG pipeline that allows users to ask ques
 
 ## Architecture
 
-**PDF Documents → Text Extraction → Chunking → Embeddings → FAISS Vector Store → Semantic Retrieval → Gemini LLM → Answer + Sources**
+**PDF Documents → Text Extraction → Token-Based Chunking → Embeddings → FAISS Vector Store → Document-Aware Retrieval → Cross-Encoder Reranking → Gemini LLM → Answer + Sources**
 
 The system operates in two stages:
 
 **1. Document Processing and Indexing**
 
 - Extract text from PDF documents using PyMuPDF.
-- Split extracted text into smaller overlapping chunks.
+- Split extracted text into overlapping chunks of up to 224 tokens, with 32 tokens of overlap, so each chunk fits the embedding model's 256-token limit.
 - Generate vector embeddings using Sentence Transformers.
 - Store embeddings in a FAISS vector index.
 - Save the index and chunk metadata locally for reuse.
@@ -28,7 +28,8 @@ The system operates in two stages:
 
 - Accept a user's question through a FastAPI endpoint.
 - Convert the question into an embedding.
-- Retrieve the top five relevant document chunks using FAISS.
+- Retrieve the top 20 candidate chunks using FAISS. If the question names a known paper, that paper's chunks are put first.
+- Rerank the candidates with a local cross-encoder and keep the best five.
 - Pass the retrieved context and question to Gemini.
 - Return a generated answer along with the retrieved document sources and page numbers.
 
@@ -41,6 +42,7 @@ The system operates in two stages:
 | Sentence Transformers | Text embedding generation |
 | all-MiniLM-L6-v2 | Pretrained embedding model |
 | FAISS | Vector similarity search |
+| ms-marco-MiniLM-L6-v2 | Local cross-encoder reranking |
 | Google Gemini API | LLM-based answer generation |
 | FastAPI | REST API development |
 | Pydantic | Request validation |
@@ -55,7 +57,7 @@ The system operates in two stages:
 - Multi-document PDF question answering
 - Semantic search using vector embeddings
 - Overlapping text chunking for context preservation
-- Top-K document retrieval
+- Document-aware retrieval and cross-encoder reranking
 - LLM-generated answers grounded in retrieved context
 - Source document and page-number references
 - Persistent FAISS vector index
@@ -144,7 +146,7 @@ python src/ingest.py
 
 ### Start the FastAPI Application
 
-Once the FAISS index and chunk metadata have been generated, run:
+Once the FAISS index and chunk metadata have been generated, run the command below. The first start downloads the embedding and reranking models from Hugging Face, for free, and they then run locally.
 
 ```bash
 uvicorn main:app --app-dir src --reload
@@ -183,7 +185,7 @@ Open:
 
 http://localhost:8000/docs
 
-**Note:** The image does not contain the FAISS index or chunk metadata, because `storage/` is not in Git and CI builds the image from Git. Build the index first, then mount `storage/` when starting the container as shown above. The API cannot start without it.
+**Note:** The image does not contain the models, so a new container downloads them when it starts. It also does not contain the FAISS index or chunk metadata, because `storage/` is not in Git and CI builds the image from Git. Build the index first, then mount `storage/` when starting the container as shown above. The API cannot start without it.
 
 ## Running the Tests
 
@@ -195,6 +197,25 @@ pytest
 ```
 
 GitHub Actions runs them on pushes and pull requests to `main`.
+
+## Retrieval Evaluation
+
+Retrieval was compared offline on 24 verified questions across the 6 papers, with no LLM calls. Every setup uses document-aware search and keeps 5 chunks.
+
+| Setup | Expected-page Hit@5 | Expected-page MRR | Full evidence retrieved | Average context tokens |
+|---|---|---|---|---|
+| 540 word-based chunks | 20/24 | 0.612 | 13/24 | 1,934 |
+| 1,011 token-based chunks | 18/24 | 0.560 | 11/24 | 1,013 |
+| 540 word-based chunks + reranking | 22/24 | 0.722 | 18/24 | 2,071 |
+| **1,011 token-based chunks + reranking (active)** | 20/24 | 0.729 | 19/24 | 1,058 |
+
+To reproduce it, with the original index backed up in `storage/baseline_540/`:
+
+```bash
+.venv/Scripts/python.exe evals/compare_retrieval.py
+```
+
+These numbers measure retrieval only, on a small sample. The Ragas scores in `evals/RAG_Evaluation_Report.md` come from the earlier global search on the 540-chunk index, and answer quality has not been re-measured for the active setup.
 
 ## Project Outcomes
 
@@ -211,7 +232,7 @@ This project demonstrates practical experience with:
 ## Future Improvements
 
 - Automated document ingestion and index rebuilding
-- Retrieval quality evaluation
+- Re-measuring answer quality on the current retrieval setup
 - Improved citation accuracy
 - Cloud deployment
 
